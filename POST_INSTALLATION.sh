@@ -14,15 +14,21 @@ if [[ $CURUSER == "root" ]]; then
 
     file_update_sudoers="update_sudoers.sh"
     if [[ -f "$file_update_sudoers" ]]; then
-        echo -e "\n$COLOR_GRAY--> Setting setup sudoers file"
+        echo -e "\n$COLOR_GRAY--> Setting setup sudoers file$STYLE_CLEAR"
         sudo "./$file_update_sudoers"
     else
-        echo -e "\n$COLOR_GRAY--> $file_update_sudoers, directory not found$STYLE_CLEAR"
+        echo -e "\n$COLOR_GRAY--> $file_update_sudoers, file not found$STYLE_CLEAR"
         exit 1
     fi
 
     file_set_parallel_downloads="./set_parallel_downloads.sh"
-    sudo "./$file_set_parallel_downloads"
+    if [[ -f "$file_set_parallel_downloads" ]]; then
+        echo -e "\n$COLOR_GRAY--> Setting pacman conf file$STYLE_CLEAR"
+        sudo "./$file_set_parallel_downloads"
+    else
+        echo -e "\n$COLOR_GRAY--> $file_set_parallel_downloads, file not found$STYLE_CLEAR"
+        exit 1
+    fi
 
     echo -e "\n$COLOR_BLUE>> Add default user$STYLE_CLEAR"
     read -p "USER: " newuser
