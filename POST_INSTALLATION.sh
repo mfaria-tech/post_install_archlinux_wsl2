@@ -21,7 +21,7 @@ if [[ $CURUSER == "root" ]]; then
         exit 1
     fi
 
-    file_set_parallel_downloads="./set_parallel_downloads.sh"
+    file_set_parallel_downloads="set_parallel_downloads.sh"
     if [[ -f "$file_set_parallel_downloads" ]]; then
         echo -e "\n$COLOR_GRAY--> Setting pacman conf file$STYLE_CLEAR"
         sudo "./$file_set_parallel_downloads"
@@ -33,4 +33,13 @@ if [[ $CURUSER == "root" ]]; then
     echo -e "\n$COLOR_BLUE>> Add default user$STYLE_CLEAR"
     read -p "USER: " newuser
     useradd -m -G wheel -s /bin/bash $newuser
+
+    file_key_sign="init_pacman_key.sh"
+    if [[ -f "$file_key_sign" ]]; then
+        echo -e "\n$COLOR_GRAY--> Initialize pacman key$STYLE_CLEAR"
+        sudo "./$file_key_sign"
+    else
+        echo -e "\n$COLOR_GRAY--> $file_key_sign, file not found$STYLE_CLEAR"
+        exit 1
+    fi
 fi
