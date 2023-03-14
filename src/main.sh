@@ -86,7 +86,7 @@ configure_lvim()
 }
 
 # Main instructions
-if [[ $CURUSER == "root" ]]; then
+if [[ $UID -eq 0 ]]; then # check if is root
     echo -e "$COLOR_BLUE>> Set root password$STYLE_CLEAR"
     passwd
 
